@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO: Replace DEPLOYED_URL with your deployed URL after deployment -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>DEPLOYED_URL/</loc>
+  </url>
+</urlset>

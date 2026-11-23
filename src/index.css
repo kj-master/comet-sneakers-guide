@@ -1,0 +1,250 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --mood-bg: #F4EADB;
+    --mood-surface: #FFFFFF;
+    --mood-ink: #2B1D14;
+    --mood-muted: #543D2F;
+    --mood-accent: #0A6E66;
+    --mood-accent-ink: #FFFFFF;
+    --mood-pop: #FF8A5B;
+    --mood-pop-ink: #2B1D14;
+    --mood-border: #2B1D14;
+  }
+
+  html {
+    font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
+    background-color: var(--mood-bg);
+    color: var(--mood-ink);
+    scroll-behavior: smooth;
+    overflow-x: clip;
+    -webkit-tap-highlight-color: rgba(20, 20, 20, 0.12);
+  }
+
+  body {
+    overflow-x: clip;
+    min-height: 100dvh;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: 'Bricolage Grotesque', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  button,
+  a,
+  input,
+  summary {
+    touch-action: manipulation;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  [id] {
+    scroll-margin-top: 76px;
+  }
+}
+
+.page-shell {
+  min-height: 100dvh;
+}
+
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 650px;
+}
+
+.mood-transition {
+  transition:
+    background-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    fill 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Subtle film-grain overlay (pointer-events-none, disabled on Save-Data / reduced motion) */
+.film-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  opacity: 0.035;
+}
+
+/* Marquee ticker */
+@keyframes drop-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: drop-marquee 30s linear infinite;
+}
+
+.marquee-wrap:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Picker result pop-in & honest answer shake (transform & opacity only) */
+@keyframes card-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.015);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-card-pop {
+  animation: card-pop 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes honest-shake {
+  0% {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+  35% {
+    opacity: 1;
+    transform: translateX(7px) rotate(0.7deg);
+  }
+  60% {
+    transform: translateX(-5px) rotate(-0.5deg);
+  }
+  80% {
+    transform: translateX(3px) rotate(0.3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+.animate-honest-shake {
+  animation: honest-shake 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* CSS confetti burst (fires once when result appears) */
+@keyframes confetti-burst {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(0.5) rotate(0deg);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--tx, 0px), var(--ty, -40px), 0) scale(1.1) rotate(var(--rot, 120deg));
+  }
+}
+
+.confetti-piece {
+  animation: confetti-burst 680ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Sticker badge wobble on hover/focus/active */
+.sticker-badge {
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sticker-badge:hover,
+.sticker-badge:focus-visible,
+.sticker-badge:active {
+  transform: rotate(3deg) scale(1.04);
+}
+
+/* Accessible range slider: 48px tall hit area, invisible native thumb so 40px sneaker thumb sits cleanly on track */
+input[type='range'].sneaker-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 48px;
+  background: transparent;
+  cursor: pointer;
+  margin: 0;
+}
+
+input[type='range'].sneaker-range:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+input[type='range'].sneaker-range::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 9999px;
+}
+
+input[type='range'].sneaker-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 48px;
+  height: 48px;
+  opacity: 0;
+  cursor: grab;
+}
+
+input[type='range'].sneaker-range::-moz-range-track {
+  height: 10px;
+  border-radius: 9999px;
+  background: transparent;
+}
+
+input[type='range'].sneaker-range::-moz-range-thumb {
+  width: 48px;
+  height: 48px;
+  opacity: 0;
+  border: 0;
+  cursor: grab;
+}
+
+/* Save-Data & Reduced Motion support */
+[data-save-data='true'] .film-grain {
+  display: none;
+}
+
+[data-save-data='true'] .marquee-track,
+[data-save-data='true'] .animate-card-pop,
+[data-save-data='true'] .animate-honest-shake,
+[data-save-data='true'] .confetti-piece {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .film-grain {
+    display: none;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  .animate-card-pop,
+  .animate-honest-shake,
+  .confetti-piece {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
